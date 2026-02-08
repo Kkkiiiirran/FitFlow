@@ -29,6 +29,12 @@ const Header = () => {
             Exercises
           </Link>
           <Link 
+            to="/modules" 
+            className={`transition-colors ${isActive('/modules') ? 'text-primary font-medium' : 'text-foreground hover:text-primary'}`}
+          >
+            Modules
+          </Link>
+          <Link 
             to="/recipes" 
             className={`transition-colors ${isActive('/recipes') ? 'text-primary font-medium' : 'text-foreground hover:text-primary'}`}
           >

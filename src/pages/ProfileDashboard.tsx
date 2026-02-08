@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  User, 
-  Calendar, 
-  Trophy, 
-  Share2, 
-  ChefHat, 
+import {
+  User,
+  Calendar,
+  Trophy,
+  Share2,
+  ChefHat,
   Dumbbell,
   Target,
   Flame,
@@ -30,7 +30,7 @@ const ProfileDashboard = () => {
     // Clear any stored authentication tokens/user data
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    
+
     // Redirect to auth/login page
     navigate('/auth');
   };
@@ -38,7 +38,7 @@ const ProfileDashboard = () => {
   useEffect(() => {
     const loadData = async () => {
       if (!user) return;
-      
+
       try {
         const [stats, heatmap] = await Promise.all([
           authService.getUserStats(user.id),
@@ -50,7 +50,7 @@ const ProfileDashboard = () => {
         console.error('Failed to load user data:', error);
       }
     };
-    
+
     loadData();
   }, [user]);
 
@@ -75,20 +75,20 @@ const ProfileDashboard = () => {
     const today = new Date();
     const startDate = new Date(today);
     startDate.setDate(startDate.getDate() - 364);
-    
+
     const dayOfWeek = startDate.getDay();
     startDate.setDate(startDate.getDate() - dayOfWeek);
-    
+
     for (let week = 0; week < 53; week++) {
       const weekData = [];
       for (let day = 0; day < 7; day++) {
         const date = new Date(startDate);
         date.setDate(date.getDate() + (week * 7) + day);
         const dateStr = date.toISOString().split('T')[0];
-        
+
         const activityData = heatmapData.find(d => {
-          const dStr = typeof d.activity_date === 'string' 
-            ? d.activity_date.split('T')[0] 
+          const dStr = typeof d.activity_date === 'string'
+            ? d.activity_date.split('T')[0]
             : new Date(d.activity_date).toISOString().split('T')[0];
           return dStr === dateStr;
         });
@@ -121,16 +121,16 @@ const ProfileDashboard = () => {
   ];
 
   const workoutCombinations = [
-    { name: "Upper Body Blast", exercises: ["Bicep Curl", "Squats", "Shoulder Press"], duration: "25 min" },
-    { name: "Core Crusher", exercises: ["Planks", "Crunches", "Russian Twists"], duration: "20 min" },
-    { name: "Leg Day Power", exercises: ["Squats", "Lunges", "Calf Raises"], duration: "30 min" },
+    { name: "Upper Body Blast", exercises: ["Bicep Curl", "Squats", "Shoulder Press"], duration: "25 min", id: "upper-body-blast"},
+    { name: "Core Crusher", exercises: ["Planks", "Crunches", "Russian Twists"], duration: "20 min", id: "core-crusher",},
+    { name: "Leg Day Power", exercises: ["Squats", "Lunges", "Calf Raises"], duration: "30 min", id: "leg-day-power", },
   ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-28 py-8 space-y-8">
         {/* Profile Header */}
         <Card>
           <CardHeader>
@@ -188,7 +188,7 @@ const ProfileDashboard = () => {
                   const year = firstDay.getFullYear();
                   const isFirstWeek = weekIndex === 0;
                   const isLastWeek = weekIndex === heatmapData.length - 1;
-                  
+
                   return (
                     <div key={weekIndex} className="flex flex-col">
                       <div className="h-4 text-xs text-muted-foreground mb-1 text-center">
@@ -248,7 +248,10 @@ const ProfileDashboard = () => {
                       </Badge>
                     ))}
                   </div>
-                  <Link to="/exercises">
+
+                  
+
+                  <Link to={`/modules/${combo.id}`}>
                     <Button size="sm" className="w-full mt-3">
                       Start Workout
                     </Button>
@@ -272,11 +275,10 @@ const ProfileDashboard = () => {
                 {badges.map((badge) => (
                   <div
                     key={badge.id}
-                    className={`p-4 border rounded-lg text-center transition-all ${
-                      badge.earned 
-                        ? "border-primary bg-primary/5 hover:bg-primary/10" 
+                    className={`p-4 border rounded-lg text-center transition-all ${badge.earned
+                        ? "border-primary bg-primary/5 hover:bg-primary/10"
                         : "border-muted bg-muted/20 opacity-50"
-                    }`}
+                      }`}
                   >
                     <div className="text-2xl mb-2">{badge.icon}</div>
                     <div className="text-sm font-medium">{badge.name}</div>

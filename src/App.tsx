@@ -10,7 +10,9 @@ import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/AuthPage";
 import ProfileDashboard from "./pages/ProfileDashboard";
 import RecipesPage from "./pages/RecipesPage";
-
+import ModuleDetailPage from "./pages/ModuleDetailPage";
+import "./App.css"
+import ModulesPage from "./pages/ModulesPage";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/exercises" element={<ExerciseSelection />} />
           <Route path="/exercise/:exerciseId" element={<ExercisePanel />} />
           <Route path="/recipes" element={<RecipesPage />} />
+          <Route path="/modules" element={<ModulesPage/>}/>
+          <Route path="/modules/:moduleId" element={<ModuleDetailPage />} />
         
           <Route path="*" element={<NotFound />} />
         </Routes>

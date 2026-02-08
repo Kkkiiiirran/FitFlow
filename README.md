@@ -1,73 +1,133 @@
-# React + TypeScript + Vite
+# FITFLOW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An intelligent **AI-powered fitness trainer** that uses real-time pose detection to track exercises, count reps, correct posture, and guide users with voice + audio feedback — all directly from the browser.
 
-Currently, two official plugins are available:
+Built using **MediaPipe Pose + React + TypeScript**, this system acts like a **personal smart workout coach**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+### Real-time AI Posture Tracking
+- Detects full body pose using **MediaPipe Pose**
+- Tracks joints, angles, and body alignment
+- Visual skeleton overlay on live camera
+- Real-time posture correction
+- Smooth landmark tracking for stable detection
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Automated Rep Counting & Feedback
+- Detects exercise stages (Up / Down)
+- Counts reps automatically
+- Filters incorrect / half reps
+- Displays:
+  - Rep count
+  - Current stage
+  - Joint angle
+- Detects bad form & warns user
+- Real-time canvas overlay
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Smart Personal Workout Coach
+Acts like an AI trainer:
+
+- Guides user during workout
+- Detects:
+  - Bad posture
+  - Incomplete movement
+  - Fast / slow reps
+  - Body imbalance
+- Gives suggestions:
+  - "Raise arm higher"
+  - "Slow down"
+  - "Keep elbow steady"
+  - "Good rep!"
+
+
+
+### Voice Assistant (Hands-Free Control)
+
+Control workouts without touching the screen using voice commands:
+
+- **"Start workout"**
+- **"Pause"**
+- **"Resume"**
+- **"Stop workout"**
+- **"Switch exercise"**
+
+<!-- Powered by **Browser Speech Recognition API**. -->
+
+
+
+###  Audio Feedback & Motivation
+
+Real-time sound guidance:
+
+- Announces rep count
+- Stage feedback: `"Up"` / `"Down"`
+- Motivational cues:
+  - "Great rep!"
+  - "Keep going!"
+  - "Halfway there!"
+  - "Finish strong!"
+
+
+
+## Supported Exercises
+
+- Bicep Curl (`setupBicepCurl.ts`)
+- Lateral Raise (`setupLateralRaise.ts`)
+- Shoulder Press (`setupShoulderPress.ts`)
+- Squats (`setupSquats.ts`)
+
+
+
+## Project Structure
+``` src/
+│
+├── pages/
+│ ├── AuthPage.tsx
+│ ├── CameraPosePanel.tsx # Webcam + Pose Detection UI
+│ ├── ExercisePanel.tsx # Exercise tracking logic & display
+│ ├── ExerciseSelection.tsx # Exercise chooser
+│ ├── HomePage.tsx
+│ ├── ProfileDashboard.tsx
+│ ├── RecipesPage.tsx
+│ └── NotFound.tsx
+│
+├── exercises/
+│ ├── calculateAngle.ts 
+│ ├── motivation.ts 
+│ ├── setupBicepCurl.ts 
+│ ├── setupLateralRaise.ts 
+│ ├── setupShoulderPress.ts 
+│ └── setupSquats.ts 
+│
+└── utils/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React + TypeScript
+- MediaPipe Pose
+- HTML5 Canvas
+- Web Speech API
+- Tensor-based pose estimation
+- Real-time video processing
+
+
+
+## How It Works
+
+1. Webcam captures live video
+2. MediaPipe detects body landmarks
+3. Joint angles are calculated
+4. Exercise logic determines:
+   - Stage (Up/Down)
+   - Rep count
+   - Form correctness
+5. UI + Audio + Voice assistant provide feedback
+
+
+
